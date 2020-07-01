@@ -36,7 +36,7 @@ exports.validate = async function(dinhDanh, dulieu, signature){
         const certLoaded = userIdentity.credentials.certificate;
 
         // perform signature checking
-	var userPublicKey = KEYUTIL.getKey(certLoaded);
+	    var userPublicKey = KEYUTIL.getKey(certLoaded);
 	//console.log(userPublicKey);
         var recover = new KJUR.crypto.Signature({"alg": "SHA256withECDSA"});
         recover.init(userPublicKey);
@@ -46,12 +46,12 @@ exports.validate = async function(dinhDanh, dulieu, signature){
  
         // Disconnect from the gateway.
         //await gateway.disconnect();
-	return recover.verify(getBackSigValueHex); 
+	   return recover.verify(getBackSigValueHex); 
 
     } catch (error) {
         console.error(`Failed verify: ${error}`);
-        process.exit(1);
+        return false
     }
 }
-let signature ='MEQCIBQA4tZwQWffzcC3lQr8xeX34hpRu+vwtCzQeKH1kekaAiAO5nx/pUlpzNeI8pqUlM25P9BJQbCWZ3uTeGwQlJIwyw==';
+//let signature ='MEQCIBQA4tZwQWffzcC3lQr8xeX34hpRu+vwtCzQeKH1kekaAiAO5nx/pUlpzNeI8pqUlM25P9BJQbCWZ3uTeGwQlJIwyw==';
 //main('ptcang','B1609577hocki1CT001Aptcang',signature);

@@ -60,23 +60,11 @@ async function main(dinhDanh,msgv) {
 
         // Register the user, enroll the user, and import the new identity into the wallet.
 
-	
-	//const key = new nodeRsa({b: 512});
-	//var pub_key = key.exportKey('public');
-	//var pri_key = key.exportKey('private');
-	//const key_pri = new nodeRsa(pri_key);
-	//const key_pub = new nodeRsa(pub_key);
-	//var enc =  key_pri.encryptPrivate(text,'base64');
-	//console.log(enc);
-	//var dec =  key_pub.decryptPublic(enc,'utf8');
-	//console.log(dec);
-
-
         const secret = await ca.register({
             affiliation: 'org1.department1',
             enrollmentID: dinhDanh,
             role: 'client',
-	    attrs: [{name: 'firstName', value: msgv, ecert: true}]
+	        attrs: [{name: 'firstName', value: msgv, ecert: true}]
         }, adminUser);
         const enrollment = await ca.enroll({
             enrollmentID: dinhDanh,
@@ -86,7 +74,7 @@ async function main(dinhDanh,msgv) {
         const x509Identity = {
             credentials: {
                 certificate: enrollment.certificate,
-		rootCertificate : enrollment.rootCertificate,
+		        rootCertificate : enrollment.rootCertificate,
                 privateKey: enrollment.key.toBytes(),
             },
             mspId: 'Org1MSP',
@@ -97,14 +85,14 @@ async function main(dinhDanh,msgv) {
         const result = `Successfully registered "${dinhDanh}" user and imported it into the wallet <br> privateKey: ${x509Identity.credentials.privateKey}`;
 	await gateway.disconnect();
 	return result;
-   }catch(error){
-	console.error(`Failed:${error}`);
-	//process.exit(1);
+   } catch(error){
+	   console.error(`Failed:${error}`);
+	   return false
 	}
 }
 //let dinhdanh='TVChau'
 //let magv='TVChau'
-module.exports = main
 //let dinhDanh = 'appUser';
-
 //main(dinhdanh,magv);
+module.exports = main
+

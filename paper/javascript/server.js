@@ -19,9 +19,8 @@ var truyVanBlock = require('./truyVanBlock.js')
 var truyVanTatCaBlock = require('./truyVanTatCaBlock.js')
 //Module cua tui
 var moduleCreateSign = require('./genarate.js')
-var moduleThemGV = require('./themGiangVien.js')
-var suaDiem = require('./suaDiem.js')
-var moduleThemSV = require('./themSinhVienTay.js')
+var themGiangVien = require('./themGiangVien.js')
+var choDiem = require('./choDiem.js')
 const { KJUR, KEYUTIL } = require('jsrsasign');
 const CryptoJS = require('crypto-js');
 
@@ -61,7 +60,7 @@ app.get('/xetTotNghiep', async(req, res)=> {
 app.get('/truyVan',async(req, res) =>{
     let mssv = req.query.mssv
     console.log(req.query.mssv)
-    let response = await truyVan(mssv,'admin')
+    let response = await truyVan(mssv,'appUser')
     console.log(response)
     res.send(response.toString())
 })
@@ -87,56 +86,22 @@ app.get('/truyVanTatCaBlock',async(req, res)=>{
   console.log("response"+JSON.stringify(response))
   res.send(JSON.stringify(response))
 })
-//Dang ky gia vien trong blockchain
-/*app.post('/themGiangVien', async(req,res) =>{
-	let dinhdanh = req.body.dinhdanh
-	let msgv  = req.body.maGiangVien
-	let response = await moduleThemGV.registerUser(dinhdanh,msgv);
-	res.send(response);
-})*/
-//Tao mot sinh vien moi
-app.post('/themSinhVien',async(req,res)=>{   
-  let ten = req.body.ten
-  let mssv = req.body.mssv
-  let cmnd = req.body.cmnd
-  let response = await moduleThemSV.themSV(mssv,ten,cmnd,'appUser');
-  res.send(response);
-  console.log(response)
-})
-//Giao vien cho diem bang tay
-app.post('/choDiemTay',async(req,res) =>{
-	let mssv = req.body.mssv;
-	let ki = req.body.hocky;
-	let ma = req.body.maLopHocPhan;
-	let diem = req.body.diemmoi;
-	let dinhdanh = req.body.dinhdanh;
-	let pk = req.body.pk;
-	//let key = pk.split(' ').join('+');
-	let data = mssv+ki+ma+diem+dinhdanh;
-	let sigValueBase64 =moduleCreateSign(data, pk);
-	console.log(sigValueBase64);
-	let response = await moduleChangePoint.changePoint(mssv,ki,ma,diem,dinhdanh,sigValueBase64);
-	res.send(response);
-})
-
 app.listen(port, async() => {
   await enrollAdmin()
   await registerUser('appUser')
-  await moduleThemGV('TVChau','TVChau')
-  await moduleThemGV('PHCuong','PHCuong')
-  await moduleThemGV('TCDe','TCDe')
-  await moduleThemGV('PTCang','PTCang')
-  await moduleThemGV('NCHuy','NCHuy')
-  await moduleThemGV('NCHNgoc','NCHNgoc')
-  await moduleThemGV('LQThang','LQThang')
-  await moduleThemGV('LDThang','LDThang')
-  await moduleThemGV('TCAn','TCAn')
+  await themGiangVien('TVChau','TVChau')
+  await themGiangVien('PHCuong','PHCuong')
+  await themGiangVien('TCDe','TCDe')
+  await themGiangVien('PTCang','PTCang')
+  await themGiangVien('NCHuy','NCHuy')
+  await themGiangVien('NCHNgoc','NCHNgoc')
+  await themGiangVien('LQThang','LQThang')
+  await themGiangVien('LDThang','LDThang')
+  await themGiangVien('TCAn','TCAn')
   await khoiTaoCacHocPhan()
   await khoiTaoGiangVien()
   await themSinhVien('admin')
   await dangKyHocPhan()
-  await suaDiem('admin')
-  //await choDiem('appUser')
-  
+  await choDiem('admin')
   console.log(`Example app listening at http://localhost:${port}`)
 });

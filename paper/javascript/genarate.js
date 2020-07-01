@@ -17,7 +17,7 @@ async function taoChuKy(dulieu,pk){
 
         //const walletContents = await wallet.export(user);
  
-	console.log(pk);
+	    console.log(pk);
         var sig = new KJUR.crypto.Signature({"alg": "SHA256withECDSA"});
 	//console.log(sig)
         sig.init(pk);
@@ -26,13 +26,13 @@ async function taoChuKy(dulieu,pk){
         var sigValueBase64 = new Buffer.from(sigValueHex, 'hex').toString('base64');
         console.log("Signature "+dulieu+":" + sigValueBase64);
 	//console.log(typeof sigValueBase64);
-	return sigValueBase64;
+	   return sigValueBase64;
     } catch (error) {
         console.error(`Failed to create Signature: ${error}`);
-        process.exit(1);
+        return false
     }
 }
-var pk = "-----BEGIN PRIVATE KEY-----\r\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgN7c35lFqE7Yhb6fD\r\nyDX+CvQT+4+z1V30fQ1LoX/ZjrShRANCAATMrDd8t9CL2LYhg05DOGQH1oFU40LR\r\nmKUGFle1OHfoqsyw6RCjIFQ72h3C4c6BbrciYvrPtnM+0cGvYIfnt3bw\r\n-----END PRIVATE KEY-----\r\n";
-var data = 'le huynh hieu';
+//var pk = "-----BEGIN PRIVATE KEY-----\r\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgN7c35lFqE7Yhb6fD\r\nyDX+CvQT+4+z1V30fQ1LoX/ZjrShRANCAATMrDd8t9CL2LYhg05DOGQH1oFU40LR\r\nmKUGFle1OHfoqsyw6RCjIFQ72h3C4c6BbrciYvrPtnM+0cGvYIfnt3bw\r\n-----END PRIVATE KEY-----\r\n";
+//var data = 'le huynh hieu';
 //main(data, pk);
 module.exports = taoChuKy;

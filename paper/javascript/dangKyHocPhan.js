@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 async function main () {
     try {
-        let dinhdanh = 'appUser'
+        let dinhdanh = 'admin'
         // load the network configuration
         const ccpPath = path.resolve(__dirname, '..', '..','first-network', 'connection-org1.json');
         let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));

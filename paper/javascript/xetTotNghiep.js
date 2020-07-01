@@ -13,7 +13,6 @@ async function main (mssv, dinhdanh){
    // let response = {}
     try {
         // load the network configuration
-        //const ccpPath = path.resolve(__dirname, '..', '..','test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
         const ccpPath = path.resolve(__dirname, '..', '..','first-network','connection-org1.json');
         const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
@@ -40,9 +39,6 @@ async function main (mssv, dinhdanh){
         // Get the contract from the network.
         const contract = network.getContract('paper');
 
-        // Evaluate the specified transaction.
-        // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
-        // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
         const result = await contract.evaluateTransaction('xetTotNghiep', mssv);
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
         return result.toString()
